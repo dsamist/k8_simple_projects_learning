@@ -1,0 +1,17 @@
+#create a service:
+kubectl create service clusterip --dry-run=client --tcp=3445:80 website -oyaml > website_service.yaml
+
+#create a deployment:
+kubectl create deployment --dry-run=client --image dsamist/website website -oyaml > website_deployment.yaml
+
+#create an ingress
+kubectl create ingress website --rule="mywebsite.com/=website:3445" --dry-run=client -oyaml > website_ingress.yaml
+
+#to check if your helmchart is ok
+helm show all ./chart (directory of the chart)
+helm template --debug <chartName> <pathToValues>
+
+#you can delete all k8 resources with the same selector
+kubectl delete all -l app=<name> (add the namespace if there's a need to)
+
+helm upgrade --atomic --install <name of app> </path to chart> ( what this does is to upgrade your application as a single unit (--atomic) and if the app doesn't exist before, it installs it as new (--install))

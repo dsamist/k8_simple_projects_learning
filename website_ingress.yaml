@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: website
+spec:
+  rules:
+  - host: mywebsite.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: website
+            port:
+              number: 3445
+        path: /
+        pathType: Prefix
+# status:
+#   loadBalancer: {}
